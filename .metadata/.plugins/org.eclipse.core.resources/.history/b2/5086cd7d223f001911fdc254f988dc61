@@ -1,0 +1,29 @@
+//控制层 
+app.controller('cartController' ,function($scope,$controller,cartService){	
+	
+	//查询购物车列表
+	$scope.findCartList = function(){
+		cartService.findCartList().success(
+			function(response){
+				$scope.cartList = response;
+				$scope.totalValue = cartService.sum($scope.cartList);
+			}
+		);
+	}
+	
+	//数量的加减
+	$scope.addGoodsToCartList = function(itemId,num){
+		cartService.addGoodsToCartList(itemId,num).success(
+				function(response){
+					if(response.success){
+						//刷新列表
+						$scope.findCartList();
+					}else{
+						alert(response.message);
+					}
+				}
+		);
+	}
+	
+	
+});	

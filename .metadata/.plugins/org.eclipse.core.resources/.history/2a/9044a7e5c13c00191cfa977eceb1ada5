@@ -1,0 +1,21 @@
+package com.pinyougou.user.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.pinyougou.pojo.TbUser;
+import com.pinyougou.user.service.UserService;
+
+@Controller
+@
+public class UserController {
+
+	@Reference
+	private UserService userService;
+	
+	@RequestMapping("/add")
+	public void add(TbUser user) {
+		
+	}
+}

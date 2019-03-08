@@ -1,0 +1,21 @@
+//控制层 
+app.controller('userController' ,function($scope,$controller,userService){	
+	
+	
+	
+	//用户注册
+	$scope.reg = function(){
+		
+		if($scope.entity.password != $scope.checkPassword){
+			alert("两次密码输入不一致，请重新输入");
+			return ;
+		}
+		
+		userService.add($scope.entity).success(
+			function(response){
+				alert(response.message);
+			}
+		);
+	}
+	
+});	

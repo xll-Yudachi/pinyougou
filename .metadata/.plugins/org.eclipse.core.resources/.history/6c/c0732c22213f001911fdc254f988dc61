@@ -1,0 +1,13 @@
+package com.pinyougou.user.service;
+
+/**
+ * Title:AddressService.java
+ * Description: 订单地址服务接口
+ * @author xll
+ * @date 2019年3月5日 下午4:30:16
+ * @version 1.0
+ *
+ */
+public interface AddressService {
+
+}

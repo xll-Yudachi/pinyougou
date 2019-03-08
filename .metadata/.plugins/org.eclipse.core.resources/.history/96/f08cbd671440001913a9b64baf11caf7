@@ -1,0 +1,9 @@
+package com.pinyougou.pay.service;
+
+import java.util.Map;
+
+public class WeixinPayService {
+
+	public Map createNative();
+	
+}

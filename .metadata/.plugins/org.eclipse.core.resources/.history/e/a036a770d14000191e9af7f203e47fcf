@@ -1,0 +1,21 @@
+app.controller('seckillGoodsController', function($scope,seckillGoodsService,$location,$interval){
+	
+	 //读取列表数据绑定到表单中
+	 $scope.findList = function(){
+		 seckillGoodsService.findList().success(
+			   function(response){
+				   $scope.list = response;
+			   }
+		 );
+	 }
+	 
+	 $scope.findOne = function(){
+		 //接收参数
+		 var id = $location.search()['id'];
+		 seckillGoodsService.findOne(id).success({
+			 function(response){
+				 $scope.entity = response;
+			 }
+		 });
+	 }
+});

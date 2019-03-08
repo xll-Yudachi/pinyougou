@@ -1,0 +1,35 @@
+package com.pinyougou.cart.service.Impl;
+
+import java.util.List;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.pinyougou.cart.service.CartService;
+import com.pinyougou.pojogroup.Cart;
+
+@Service
+public class CartServiceImpl implements CartService{
+
+	@Override
+	public List<Cart> addGoodsToCartList(List<Cart> list, Long itemId, Integer num) {
+		
+		return null;
+	}
+	
+	
+	/**
+	 * Title:searchCartBySellerId
+	 * Description: 根据商家ID在购物车列表中查询购物车对象
+	 * @param cartList
+	 * @param sellerId
+	 * @return
+	 */
+	private Cart searchCartBySellerId(List<Cart> cartList, String sellerId) {
+		
+		for(Cart cart : cartList) {
+			if(cart.getSellerId().equals(sellerId)) {
+				return cart;
+			}
+		}
+		return null;
+	}
+}

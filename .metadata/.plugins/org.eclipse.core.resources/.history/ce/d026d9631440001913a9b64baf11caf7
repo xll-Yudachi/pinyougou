@@ -1,0 +1,5 @@
+package com.pinyougou.pay.service;
+
+public class WeixinPayService {
+
+}

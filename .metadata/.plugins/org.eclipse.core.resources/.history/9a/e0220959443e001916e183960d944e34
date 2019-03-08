@@ -1,0 +1,18 @@
+package com.pinyougou.cart.service.Impl;
+
+import java.util.List;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.pinyougou.cart.service.CartService;
+import com.pinyougou.pojogroup.Cart;
+
+@Service
+public class CartServiceImpl implements CartService{
+
+	@Override
+	public List<Cart> addGoodsToCartList(List<Cart> list, Long itemId, Integer num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

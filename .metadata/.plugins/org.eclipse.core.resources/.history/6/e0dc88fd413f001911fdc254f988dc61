@@ -1,0 +1,5 @@
+package com.pinyougou.order.service;
+
+public interface OrderService {
+
+}

@@ -1,0 +1,96 @@
+package com.pinyougou.cart.service.Impl;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.pinyougou.cart.service.CartService;
+import com.pinyougou.mapper.TbItemMapper;
+import com.pinyougou.pojo.TbItem;
+import com.pinyougou.pojo.TbOrderItem;
+import com.pinyougou.pojogroup.Cart;
+
+@Service
+public class CartServiceImpl implements CartService{
+
+	@Autowired
+	private TbItemMapper itemMapper;
+	
+	@Override
+	public List<Cart> addGoodsToCartList(List<Cart> list, Long itemId, Integer num) {
+		//1.根据skuID查询商品明细sku对象
+		TbItem item = itemMapper.selectByPrimaryKey(itemId);
+		if(item == null) {
+			throw new RuntimeException("商品不存在");
+		}
+		if(!item.getStatus().equals("1")) {
+			throw new RuntimeException("商品状态不合法");
+		}
+		
+		//2.根据SKU对象得到商家ID
+		String sellerId = item.getSellerId();
+		
+		//3.根据商家ID在购物车列表中查询购物车对象
+		Cart cart = searchCartBySellerId(list, sellerId);
+		if(cart == null) {
+			//4.如果购物车列表中不存在该商家的购物车
+			//4.1 创建一个新的购物车对象
+			cart = new Cart();
+			cart.setSellerId(sellerId);
+			cart.setSellerName(item.getSeller());
+			
+			//4.2 创建购物车明细列表
+			List<TbOrderItem> orderItemList = new ArrayList<>();
+			
+			orderItemList.add(orderItem);
+			
+			cart.setOrderItemList(orderItemList);
+		
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Title:searchCartBySellerId
+	 * Description: 根据商家ID在购物车列表中查询购物车对象
+	 * @param cartList
+	 * @param sellerId
+	 * @return
+	 */
+	private Cart searchCartBySellerId(List<Cart> cartList, String sellerId) {
+		
+		for(Cart cart : cartList) {
+			if(cart.getSellerId().equals(sellerId)) {
+				return cart;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Title:createOrderItem
+	 * Description:	创建新的购物车明细对象
+	 * @param item
+	 * @param num
+	 * @return
+	 */
+	private TbOrderItem createOrderItem(TbItem item, Integer num) {
+		
+		//创建新的购物车明细对象
+		TbOrderItem orderItem = new TbOrderItem();
+		orderItem.setGoodsId(item.getGoodsId());
+		orderItem.setItemId(item.getGoodsId());
+		orderItem.setNum(num);
+		orderItem.setPrice(item.getPrice());
+		orderItem.setPicPath(item.getImage());
+		orderItem.setSellerId(item.getSellerId());
+		orderItem.setTitle(item.getTitle());
+		orderItem.setTotalFee(new BigDecimal(item.getPrice().doubleValue()* num));
+		
+		return orderItem;
+	}
+}

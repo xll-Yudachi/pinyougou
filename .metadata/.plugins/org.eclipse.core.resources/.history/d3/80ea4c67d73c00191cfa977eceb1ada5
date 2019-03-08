@@ -1,0 +1,40 @@
+package com.xll.sms;
+
+import java.io.IOException;
+
+import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
+
+import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
+import com.github.qcloudsms.httpclient.HTTPException;
+
+@Component
+public class SmsUtil {
+
+	@Autowired
+	private Environment environment;
+	
+	public void SendSms(String phoneNumber,String[] params) {
+		
+		Integer appid = Integer.valueOf(environment.getProperty("appid"));
+		String appkey = environment.getProperty("appkey");
+		try {
+		    SmsSingleSender ssender = new SmsSingleSender(appid, appkey);
+		    SmsSingleSenderResult result = ssender.send(0, "86", phoneNumber,
+		        "【夕立立】您的验证码是: " + params[0], "", "");
+		    System.out.println(result);
+		} catch (HTTPException e) {
+		    // HTTP响应码错误
+		    e.printStackTrace();
+		} catch (JSONException e) {
+		    // json解析错误
+		    e.printStackTrace();
+		} catch (IOException e) {
+		    // 网络IO错误
+		    e.printStackTrace();
+		}
+	}
+}

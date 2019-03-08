@@ -1,0 +1,24 @@
+package com.pinyougou.seckill.service.Impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.pinyougou.mapper.TbSeckillGoodsMapper;
+import com.pinyougou.pojo.TbSeckillGoods;
+import com.pinyougou.pojo.TbSeckillGoodsExample;
+import com.pinyougou.pojo.TbSeckillGoodsExample.Criteria;
+import com.pinyougou.seckill.service.SeckillGoodsService;
+
+public class SeckillGoodsServiceImpl implements SeckillGoodsService{
+
+	@Autowired
+	private TbSeckillGoodsMapper seckillGoodsMapper;
+	
+	@Override
+	public List<TbSeckillGoods> findList() {
+		TbSeckillGoodsExample example = new TbSeckillGoodsExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andStatusEqualTo("1");	//审核通过的商品
+	}
+}

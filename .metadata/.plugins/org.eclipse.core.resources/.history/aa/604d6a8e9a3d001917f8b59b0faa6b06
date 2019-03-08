@@ -1,0 +1,5 @@
+package com.pinyougou.user.controller;
+
+public class LoginController {
+
+}

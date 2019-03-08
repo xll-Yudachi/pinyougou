@@ -1,0 +1,102 @@
+package com.pinyougou.order.service.Impl;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.pinyougou.mapper.TbOrderItemMapper;
+import com.pinyougou.mapper.TbOrderMapper;
+import com.pinyougou.order.service.OrderService;
+import com.pinyougou.pojo.TbOrder;
+import com.pinyougou.pojo.TbOrderItem;
+import com.pinyougou.pojogroup.Cart;
+
+import util.IdWorker;
+
+/**
+ * Title:OrderServiceImpl.java
+ * Description: 订单服务实现类
+ * @author xll
+ * @date 2019年3月5日 下午8:27:56
+ * @version 1.0
+ *
+ */
+@Service(timeout=100000)
+@Transactional
+public class OrderServiceImpl implements OrderService{
+
+	@Autowired
+	private RedisTemplate redisTemplate;
+	@Autowired
+	private IdWorker idWorker;
+	@Autowired
+	private TbOrderMapper orderMapper;
+	@Autowired
+	private TbOrderItemMapper orderItemMapper;
+	
+	@Override
+	public void add(TbOrder order) {
+		
+		//1.从redis中读取购物车列表
+		List<Cart> cartList = (List<Cart>) redisTemplate.boundHashOps("cartList").get(order.getUserId());
+		
+		//2.循环购物车列表 添加订单
+		for(Cart cart : cartList) {
+			//填充订单对象
+			TbOrder tbOrder = new TbOrder();
+			//获取订单编号ID
+			long orderId = idWorker.nextId();
+			tbOrder.setOrderId(orderId);
+			//支付类型
+			tbOrder.setPaymentType(order.getPaymentType());
+			//未付款
+			tbOrder.setStatus("1");
+			//下单时间
+			tbOrder.setCreateTime(new Date());
+			//更新时间
+			tbOrder.setUpdateTime(new Date());
+			//当前用户
+			tbOrder.setUserId(order.getUserId());
+			//收货人地址
+			tbOrder.setReceiverAreaName(order.getReceiverAreaName());
+			//收货人电话
+			tbOrder.setReceiverMobile(order.getReceiverMobile());
+			//收货人
+			tbOrder.setReceiver(order.getReceiver());
+			//订单来源
+			tbOrder.setSourceType(order.getSourceType());
+			//商家ID
+			tbOrder.setSellerId(order.getSellerId());
+			
+			//订单总金额
+			double money = 0 ;
+			//循环购物车中的明细记录
+			for(TbOrderItem orderItem : cart.getOrderItemList()) {
+				//主键
+				orderItem.setId(idWorker.nextId());
+				//订单编号
+				orderItem.setOrderId(orderId);
+				//商家ID
+				orderItem.setSellerId(cart.getSellerId());
+				//添加订单明细
+				orderItemMapper.insert(orderItem);
+				money += orderItem.getTotalFee().doubleValue();
+			}
+			
+			//合计
+			tbOrder.setPayment(new BigDecimal(money));
+			
+			//添加订单对象
+			orderMapper.insert(tbOrder);
+		}
+		
+		//3.清除redis中的购物车
+		redisTemplate.boundHashOps("cartList").delete(order.getUserId());
+	
+	}
+}

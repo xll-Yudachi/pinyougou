@@ -1,0 +1,13 @@
+package com.pinyougou.order.service;
+
+/**
+ * Title:OrderService.java
+ * Description: 订单服务接口
+ * @author xll
+ * @date 2019年3月5日 下午8:27:00
+ * @version 1.0
+ *
+ */
+public interface OrderService {
+
+}

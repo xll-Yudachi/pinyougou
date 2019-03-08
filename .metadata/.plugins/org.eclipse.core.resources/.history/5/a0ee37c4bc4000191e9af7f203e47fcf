@@ -1,0 +1,4 @@
+app.controller('seckillGoodsController', function($scope,seckillGoodsService,$location){
+	
+	 
+});

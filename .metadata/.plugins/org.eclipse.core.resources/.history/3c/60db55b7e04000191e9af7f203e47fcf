@@ -1,0 +1,21 @@
+package com.pinyougou.seckill.service;
+
+/**
+ * Title:SeckillOrderService.java
+ * Description: 秒杀订单服务
+ * @author xll
+ * @date 2019年3月7日 下午9:08:02
+ * @version 1.0
+ *
+ */
+public interface SeckillOrderService {
+
+	/**
+	 * Title:submitOrder
+	 * Description: 秒杀商品下单
+	 * @param seckillId
+	 * @param userId
+	 */
+	public void submitOrder(Long seckillId, String userId);
+	
+}

@@ -1,0 +1,27 @@
+package com.pinyougou.cart.controller;
+
+import java.util.List;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.pinyougou.pojo.TbAddress;
+import com.pinyougou.user.service.AddressService;
+
+@RestController
+@RequestMapping("/address")
+public class AddressController {
+
+	@Reference
+	private AddressService addressService;
+	
+	@RequestMapping("/findListByLoginUser")
+	public List<TbAddress> findListByLoginUser(){
+		//获取用户登录名
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println("address:" + userName);
+		return addressService.findListByUserId(userName);
+	}
+}

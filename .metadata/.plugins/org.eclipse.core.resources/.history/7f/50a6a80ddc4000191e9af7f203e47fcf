@@ -1,0 +1,51 @@
+package com.pinyougou.seckill.service.Impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.pinyougou.mapper.TbSeckillGoodsMapper;
+import com.pinyougou.mapper.TbSeckillOrderMapper;
+import com.pinyougou.pojo.TbSeckillGoods;
+import com.pinyougou.seckill.service.SeckillOrderService;
+
+/**
+ * Title:SeckillOrderServiceImpl.java
+ * Description: 秒杀订单实现类
+ * @author xll
+ * @date 2019年3月7日 下午9:09:02
+ * @version 1.0
+ */
+@Service(timeout=100000)
+public class SeckillOrderServiceImpl implements SeckillOrderService{
+	
+	@Autowired
+	private RedisTemplate redisTemplate;
+	@Autowired
+	private TbSeckillOrderMapper seckillOrderMapper;
+	@Autowired
+	private TbSeckillGoodsMapper seckillGoodsMapper;
+	
+	@Override
+	public void submitOrder(Long seckillId, String userId) {
+		
+		//1.查询缓存中的商品
+		TbSeckillGoods seckillGoods = (TbSeckillGoods)redisTemplate.boundHashOps("seckillGoods").get(seckillId);
+		if(seckillGoods == null) {
+			throw new RuntimeException("商品不存在");
+		}
+		if(seckillGoods.getStockCount() <= 0) {
+			throw new RuntimeException("商品已经被抢光");
+		}
+		
+		//2.减少库存
+		seckillGoods.setStockCount(seckillGoods.getStockCount()-1);
+		redisTemplate.boundHashOps("seckillGoods").put(seckillId, seckillGoods);
+		if(seckillGoods.getStockCount() == 0) {
+			//更新数据库
+			seckillGoodsMapper.updateByPrimaryKey(seckillGoods);
+			//删除对应的redis缓存
+			redisTemplate.boundHashOps("seckillGoods").delete(seckillId);
+		}
+	}
+}

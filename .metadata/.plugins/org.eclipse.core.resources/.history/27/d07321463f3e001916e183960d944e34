@@ -1,0 +1,12 @@
+package com.pinyougou.cart.service;
+
+/**
+ * Title:CartService.java
+ * Description: 购物车服务接口
+ * @author xll
+ * @date 2019年3月4日 下午1:32:22
+ * @version 1.0
+ */
+public interface CartService {
+
+}

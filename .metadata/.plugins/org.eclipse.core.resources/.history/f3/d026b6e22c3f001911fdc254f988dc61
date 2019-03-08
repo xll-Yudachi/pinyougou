@@ -1,0 +1,32 @@
+package com.pinyougou.user.service;
+
+import java.util.List;
+
+import com.pinyougou.pojo.TbAddress;
+
+/**
+ * Title:AddressService.java
+ * Description: 订单地址服务接口
+ * @author xll
+ * @date 2019年3月5日 下午4:30:16
+ * @version 1.0
+ *
+ */
+public interface AddressService {
+
+	/**
+	 * Title:findListByUserId
+	 * Description: 根据userId查询联系方式
+	 * @param userId
+	 * @return
+	 */
+	public List<TbAddress> findListByUserId(String userId);
+	
+	/**
+	 * Title:addAddress
+	 * Description: 添加收货地址
+	 * @param address
+	 */
+	public void addAddress(TbAddress address,String userId);
+	
+}

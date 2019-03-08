@@ -1,0 +1,5 @@
+package com.pinyougou.seckill.service.Impl;
+
+public class SeckillOrderServiceImpl {
+
+}

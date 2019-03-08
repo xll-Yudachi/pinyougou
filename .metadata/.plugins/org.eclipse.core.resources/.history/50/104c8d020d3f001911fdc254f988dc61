@@ -1,0 +1,82 @@
+ //控制层 
+app.controller('itemController' ,function($scope,$http){
+
+	$scope.num = 1;
+	//存储用户选择的规格
+	$scope.specificationItems = {};
+
+	//数量加减
+	$scope.addNum = function(x){
+		$scope.num += x;
+		if($scope.num < 1){
+			$scope.num = 1;
+		}
+	}
+
+	//用户选择规格
+	$scope.selectSpecification = function (key , value) {
+		$scope.specificationItems[key] = value;
+		//查询SKU
+		searchSKU();
+    }
+
+    //判断某规格是否被选中
+	$scope.isSelected = function (key , value) {
+		if($scope.specificationItems[key] == value){
+			return true;
+		}else{
+			return false;
+		}
+    }
+
+    //当前选择的SKU
+	$scope.sku = {};
+
+	//加载默认的SKU
+	$scope.loadSKU = function () {
+		$scope.sku = skuList[0];
+		//进行深克隆 如果用 = 直接复制 则为浅克隆 引用相同
+		$scope.specificationItems = JSON.parse(JSON.stringify($scope.sku.spec));
+    }
+
+    //匹配两个对象是否相等
+	matchObject = function (map_1, map_2) {
+
+		for(var key in map_1){
+			if(map_1[key] != map_2[key]){
+				return false
+			}
+		}
+		for(var key in map_2){
+			if(map_2[key] != map_1[key]){
+				return false;
+			}
+		}
+		return true;
+    }
+
+    //根据规格查询SKU
+	searchSKU = function () {
+		for(var i = 0; i < skuList.length; i++){
+			if(matchObject(skuList[i].spec, $scope.specificationItems)){
+				$scope.sku = skuList[i];
+				return ;
+			}
+		}
+    }
+	
+	//添加商品到购物车
+	$scope.addToCart = function(){
+		$http.get('http://localhost:9107/cart/addGoodsToCartList.do?itemId=' + $scope.sku.id + '&num=' + $scope.num, {'withCredentials':true}).success(
+			function(response){
+				if(response.success){
+					location.href = 'http://localhost:9107/cart.html';
+				}else{
+					alert(response.message);
+				}
+			}
+		);
+		
+	}
+	
+});	

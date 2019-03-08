@@ -1,0 +1,45 @@
+package com.pinyougou.pay.service.Impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.github.wxpay.sdk.WXPayUtil;
+import com.pinyougou.pay.service.WeixinPayService;
+
+@Service
+public class WeiXinPayServiceImpl implements WeixinPayService {
+
+	@Value("${appid}")
+	private String appid;
+
+	@Value("${partner}")
+	private String partner;
+
+	@Value("${partnerkey}")
+	private String partnerkey;
+
+	@Override
+	public Map createNative(String out_trade_no, String total_fee) {
+		// 1.参数封装
+		Map param = new HashMap<>();
+		param.put("appid", appid);// 公众账号ID
+		param.put("mch_id", partner);// 商户
+		param.put("nonce_str", WXPayUtil.generateNonceStr());// 随机字符串
+		param.put("body", "品优购");
+		param.put("out_trade_no", out_trade_no);// 交易订单号
+		param.put("total_fee", total_fee);// 金额（分）
+		param.put("spbill_create_ip", "127.0.0.1");
+		param.put("notify_url", "http://www.xifuxili.com.cn");
+		param.put("trade_type", "NATIVE");// 交易类型
+		
+		try {
+			String paramXml = WXPayUtil.generateSignedXml(param, partnerkey);
+			System.out.println("请求的参数：" + paramXml);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+}

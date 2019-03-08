@@ -1,0 +1,12 @@
+//登录控制器
+app.controller('loginController',function($scope,loginService){
+	
+	$scope.getName = function(){
+		loginService.getName().success({
+			function(response){
+				alert(response.userName);
+				$scope.userName = response.userName;
+			}
+		});
+	}
+});

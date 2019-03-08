@@ -1,0 +1,7 @@
+package com.pinyougou.user.service.Impl;
+
+import com.pinyougou.user.service.UserService;
+
+public class UserServiceImpl implements UserService{ 
+
+}

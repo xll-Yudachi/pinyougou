@@ -1,0 +1,12 @@
+package com.pinyougou.task;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class SeckillTask {
+
+	public void refreshSeckillGoods() {
+		System.out.println("执行了任务调度");
+		
+	}
+}

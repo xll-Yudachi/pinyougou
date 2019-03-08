@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;pinyougou-order-controller&apos;&#x0D;&#x0A;- Original project: &apos;pinyougou-order-controller&apos;&#x0D;&#x0A;- Original element: &apos;pinyougou-order-controller/src/main/java/com.pinyougou.order.controller&apos;" description="Delete element" element1="/src\/main\/java&lt;com.pinyougou.order.controller" element2="/src\/main\/java&lt;com.pinyougou.order" element3="/src\/main\/java&lt;com.pinyougou" element4="/src\/main\/java&lt;com" elements="4" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1551851649091" subPackages="false" version="1.0"/>
+</session>

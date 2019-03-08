@@ -1,0 +1,7 @@
+package com.pinyougou.user.service.Impl;
+
+import com.pinyougou.user.service.AddressService;
+
+public class AddressServiceImpl implements AddressService{
+
+}

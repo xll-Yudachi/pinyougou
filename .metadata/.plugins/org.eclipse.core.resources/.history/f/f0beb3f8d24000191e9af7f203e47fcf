@@ -1,0 +1,37 @@
+app.controller('seckillGoodsController', function($scope,seckillGoodsService,$location,$interval){
+	
+	 //读取列表数据绑定到表单中
+	 $scope.findList = function(){
+		 seckillGoodsService.findList().success(
+			   function(response){
+				   $scope.list = response;
+			   }
+		 );
+	 }
+	 
+	 $scope.findOne = function(){
+		 //接收参数
+		 var id = $location.search()['id'];
+		 seckillGoodsService.findOne(id).success({
+			 function(response){
+				 $scope.entity = response;
+				 //倒计时开始
+				 //获取从结束时间到当前时间的秒数
+				 $scope.second = Math.floor((new Date($scope.entity.endTime).getTime() - new Date().getTime())/1000);
+				 
+				 time = $interval(function(){
+						$scope.second = $scope.second-1;
+						if($scope.second <= 0){
+							$interval.cancel(time);
+						}
+					 },1000);
+			 }
+		 });
+	 }
+	 
+	 //将秒数转换为 天小时分钟秒格式   xxx天  xx:xx:xx
+	 convertTimeString = function(totalseconds){
+		 
+	 }
+	
+});

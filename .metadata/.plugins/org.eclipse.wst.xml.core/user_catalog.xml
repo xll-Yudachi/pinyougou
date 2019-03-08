@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <system systemId="http://code.alibabatech.com/schema/dubbo/dubbo.xsd" uri="file:///D:/品优购/资源/约束文件/dubbo.xsd"/>
+</catalog>

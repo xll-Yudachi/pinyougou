@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="find"/>
+			<item value="money"/>
+			<item value="立即抢购"/>
+			<item value="距离结束"/>
+			<item value="秒杀价"/>
+			<item value="img"/>
+			<item value="title"/>
+			<item value="立即"/>
+			<item value="倒计"/>
+			<item value="倒计时"/>
+			<item value="已售"/>
+			<item value="商品列表"/>
+			<item value="支付金额"/>
+			<item value="订单"/>
+			<item value="微信支付"/>
+		</list>
+		<list key="replacehistory">
+			<item value="{{loginName}}"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="356" key="DIALOG_WIDTH"/>
+		<item value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI" key="DIALOG_FONT_NAME"/>
+		<item value="454" key="DIALOG_HEIGHT"/>
+		<item value="149" key="DIALOG_X_ORIGIN"/>
+		<item value="85" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

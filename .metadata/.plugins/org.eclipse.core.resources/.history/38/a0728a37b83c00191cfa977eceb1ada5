@@ -1,0 +1,29 @@
+package com.xll.sms;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class test {
+
+	@Autowired
+	private JmsMessagingTemplate jmsMessagingTemplate;
+	
+	@RequestMapping("/sendSms")
+	public void sendSms() {
+		Map map = new HashMap<>();
+		String checkCode = new Double((Math.random()*9+1)*1000).toString();
+		String[] params = {checkCode};
+		
+		map.put("phoneNumber", "18872427726");
+		map.put("templateId", 286166);
+		map.put("smsSign", "夕立立的资源小窝");
+		map.put("params", params);
+	
+	}
+}

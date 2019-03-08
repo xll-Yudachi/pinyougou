@@ -1,0 +1,37 @@
+package com.pinyougou.search.service;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Title:ItemSearchService.java
+ * Description: 商品搜索接口
+ * @author xll
+ * @date 2019年2月21日 下午9:02:52
+ * @version 1.0
+ *
+ */
+public interface ItemSearchService {
+	
+	/**
+	 * Title:search
+	 * Description:搜索方法
+	 * @param searchMap
+	 * @return
+	 */
+	public Map search(Map searchMap);
+	
+	/**
+	 * Title:importList
+	 * Description: 批量导入列表
+	 * @param list
+	 */
+	public void importList(List list);
+	
+	/**
+	 * Title:deleteByGoodsIds
+	 * Description:根据SPU列表从solr索引库删除商品列表
+	 * @param goodsIds
+	 */
+	public void deleteByGoodsIds(List goodsIds);
+}

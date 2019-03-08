@@ -1,0 +1,71 @@
+//控制层 
+app.controller('cartController' ,function($scope,$controller,cartService){	
+	
+	//查询购物车列表
+	$scope.findCartList = function(){
+		cartService.findCartList().success(
+			function(response){
+				$scope.cartList = response;
+				$scope.totalValue = cartService.sum($scope.cartList);
+			}
+		);
+	}
+	
+	//数量的加减
+	$scope.addGoodsToCartList = function(itemId,num){
+		cartService.addGoodsToCartList(itemId,num).success(
+				function(response){
+					if(response.success){
+						//刷新列表
+						$scope.findCartList();
+					}else{
+						alert(response.message);
+					}
+				}
+		);
+	}
+	
+	//获取当前用户的地址列表
+	$scope.findAddressList = function(){
+		cartService.findAddressList().success(
+			 function(response){
+				 $scope.addressList = response;
+				 for(var i=0; i<$scope.addressList.length; i++){
+					 if($scope.addressList[i].isDefault == '1'){
+						 $scope.address = $scope.addressList[i];
+						 break;
+					 }
+				 }
+			 }
+		);
+	}
+	
+	//选择地址
+	$scope.selectAddress = function(address){
+		$scope.address = address;
+	}
+	
+	//判断某地址对象是不是当前选择的地址对象
+	$scope.isSelectAddress = function(address){
+		if(address == $scope.address){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	//添加收货地址
+	$scope.addAddress = function(){
+		cartService.addAddress($scope.entity).success(
+			function(response){
+				if(response.success){
+					alert(response.message);
+					location.href='./getOrderInfo';
+				}else{
+					alert(response.message);
+				}
+			}
+		);
+	}
+	
+});	

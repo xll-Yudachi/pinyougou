@@ -1,0 +1,9 @@
+//服务层
+app.service('userService',function($http){
+	
+	//用户注册
+	this.add = function(entity){
+		return $http.post('user/add.do',entity);
+	}
+	
+});

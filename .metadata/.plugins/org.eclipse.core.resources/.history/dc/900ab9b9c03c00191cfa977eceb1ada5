@@ -1,0 +1,5 @@
+package com.pinyougou.user.service;
+
+public interface UserService {
+
+}
